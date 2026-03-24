@@ -7,81 +7,95 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Grain overlay -->
+    <div class="grain-overlay"></div>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="container">
             <div class="nav-wrapper">
-                <div class="logo">
-                    <span class="logo-icon">✦</span>
-                    <span class="logo-text">Consulting Expert Partner</span>
-                </div>
+                <a href="#home" class="logo">
+                    <div class="logo-diamond"></div>
+                    <span class="logo-text">CEP</span>
+                    <span class="logo-divider"></span>
+                    <span class="logo-full">Consulting Expert Partner</span>
+                </a>
                 <ul class="nav-menu">
                     <li><a href="#home">Главная</a></li>
                     <li><a href="#services">Услуги</a></li>
-                    <li><a href="#why-us">Преимущества</a></li>
+                    <li><a href="#why-us">О нас</a></li>
                     <li><a href="#process">Процесс</a></li>
                     <li><a href="#contact">Контакты</a></li>
                 </ul>
-                <button class="cta-button">Консультация</button>
-                <div class="burger-menu">
+                <a href="#contact" class="cta-button">
+                    <span>Консультация</span>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8H13M9 4L13 8L9 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </a>
+                <button class="burger-menu" aria-label="Menu">
                     <span></span>
                     <span></span>
                     <span></span>
-                </div>
+                </button>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section id="home" class="hero">
-        <div class="hero-background">
-            <div class="gradient-orb orb-1"></div>
-            <div class="gradient-orb orb-2"></div>
-            <div class="gradient-orb orb-3"></div>
-        </div>
+        <div class="hero-pattern"></div>
+        <div class="hero-gradient"></div>
         <div class="container">
             <div class="hero-content">
-                <div class="hero-badge">
-                    <span class="badge-dot"></span>
-                    Эксперты в бизнес-консалтинге ОАЭ
+                <div class="hero-eyebrow">
+                    <div class="eyebrow-line"></div>
+                    <span>Dubai &bull; Abu Dhabi &bull; DIFC</span>
+                    <div class="eyebrow-line"></div>
                 </div>
                 <h1 class="hero-title">
-                    Ваш бизнес в <span class="gradient-text">Дубае</span> начинается здесь
+                    <span class="title-line">Ваш бизнес</span>
+                    <span class="title-line title-accent">в Дубае</span>
+                    <span class="title-line">начинается здесь</span>
                 </h1>
                 <p class="hero-description">
-                    Комплексные решения для начала и развития Вашего бизнеса в Дубае. Финансовый анализ, стратегический консалтинг и полное сопровождение на всех этапах.
+                    Комплексные решения для начала и развития Вашего бизнеса в Дубае.
+                    Финансовый анализ, стратегический консалтинг и полное сопровождение.
                 </p>
                 <div class="hero-buttons">
-                    <button class="btn-primary">
-                        Получить консультацию
+                    <a href="#contact" class="btn-primary">
+                        <span>Получить консультацию</span>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                            <path d="M7.5 15L12.5 10L7.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M4 10H16M11 5L16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
-                    </button>
-                    <button class="btn-secondary">
-                        Узнать больше
-                    </button>
-                </div>
-                <div class="hero-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Компаний открыто</div>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <div class="stat-number">10+</div>
-                        <div class="stat-label">Лет на рынке</div>
-                    </div>
-                    <div class="stat-divider"></div>
-                    <div class="stat-item">
-                        <div class="stat-number">98%</div>
-                        <div class="stat-label">Довольных клиентов</div>
-                    </div>
+                    </a>
+                    <a href="#services" class="btn-ghost">Узнать больше</a>
                 </div>
             </div>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="500">500+</div>
+                    <div class="stat-line"></div>
+                    <div class="stat-label">Компаний открыто</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="10">10+</div>
+                    <div class="stat-line"></div>
+                    <div class="stat-label">Лет на рынке</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="98">98%</div>
+                    <div class="stat-line"></div>
+                    <div class="stat-label">Довольных клиентов</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-scroll-hint">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
         </div>
     </section>
 
@@ -89,132 +103,129 @@
     <section id="services" class="services">
         <div class="container">
             <div class="section-header">
-                <span class="section-badge">Наши услуги</span>
-                <h2 class="section-title">Полный спектр консалтинговых услуг</h2>
+                <div class="section-eyebrow">
+                    <div class="eyebrow-diamond"></div>
+                    <span>Наши услуги</span>
+                </div>
+                <h2 class="section-title">Полный спектр<br>консалтинговых услуг</h2>
                 <p class="section-description">
-                    Мы предлагаем комплексные решения для успешного ведения бизнеса в ОАЭ
+                    Комплексные решения для успешного ведения бизнеса в ОАЭ
                 </p>
             </div>
 
             <div class="services-grid">
-                <div class="service-card featured">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <rect x="5" y="8" width="30" height="24" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <path d="M5 15H35M12 22H28M12 27H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                <div class="service-card" data-index="01">
+                    <div class="service-card-inner">
+                        <div class="service-number">01</div>
+                        <h3 class="service-title">Финансовый анализ и моделирование</h3>
+                        <p class="service-description">
+                            Анализ финансовой отчетности (МСФО), финансовое моделирование, оценка бизнеса и прогнозирование денежных потоков
+                        </p>
+                        <ul class="service-features">
+                            <li>Анализ отчетности и денежных потоков</li>
+                            <li>Финансовое моделирование (DCF, сценарный анализ)</li>
+                            <li>Бюджетирование и прогнозирование</li>
+                            <li>Стресс-тестирование и диагностика</li>
+                        </ul>
+                        <div class="service-cta">
+                            <button class="service-button">Подробнее</button>
+                        </div>
                     </div>
-                    <h3 class="service-title">Финансовый анализ и моделирование</h3>
-                    <p class="service-description">
-                        Анализ финансовой отчетности (МСФО), финансовое моделирование, оценка бизнеса и прогнозирование денежных потоков
-                    </p>
-                    <ul class="service-features">
-                        <li>Анализ отчетности и денежных потоков</li>
-                        <li>Финансовое моделирование (DCF, сценарный анализ)</li>
-                        <li>Бюджетирование и прогнозирование</li>
-                        <li>Стресс-тестирование и диагностика</li>
-                    </ul>
-                    <button class="service-button">Узнать подробнее</button>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <circle cx="20" cy="20" r="12" stroke="currentColor" stroke-width="2"/>
-                            <path d="M20 8V20L28 24" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                        </svg>
+                <div class="service-card" data-index="02">
+                    <div class="service-card-inner">
+                        <div class="service-number">02</div>
+                        <h3 class="service-title">Оценка бизнеса и корпоративные финансы</h3>
+                        <p class="service-description">
+                            Оценка компаний и активов, инвестиционное обоснование проектов, структура капитала
+                        </p>
+                        <ul class="service-features">
+                            <li>Оценка бизнеса и активов</li>
+                            <li>Технико-экономическое обоснование</li>
+                            <li>Подготовка pitch deck и data room</li>
+                            <li>Сопровождение сделок M&A</li>
+                        </ul>
+                        <div class="service-cta">
+                            <button class="service-button">Подробнее</button>
+                        </div>
                     </div>
-                    <h3 class="service-title">Оценка бизнеса и корпоративные финансы</h3>
-                    <p class="service-description">
-                        Оценка компаний и активов, инвестиционное обоснование проектов, структура капитала и подготовка к инвестициям
-                    </p>
-                    <ul class="service-features">
-                        <li>Оценка бизнеса и активов</li>
-                        <li>Технико-экономическое обоснование</li>
-                        <li>Подготовка pitch deck и data room</li>
-                        <li>Сопровождение сделок M&A</li>
-                    </ul>
-                    <button class="service-button">Узнать подробнее</button>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <path d="M20 5L25 15H35L27.5 22.5L30 32.5L20 25L10 32.5L12.5 22.5L5 15H15L20 5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                        </svg>
+                <div class="service-card" data-index="03">
+                    <div class="service-card-inner">
+                        <div class="service-number">03</div>
+                        <h3 class="service-title">Управленческий и стратегический консалтинг</h3>
+                        <p class="service-description">
+                            Разработка бизнес-стратегии, выход на рынок ОАЭ и GCC, реструктуризация и трансформация
+                        </p>
+                        <ul class="service-features">
+                            <li>Бизнес-стратегия и планирование</li>
+                            <li>Стратегия выхода на рынок (UAE, DIFC, GCC)</li>
+                            <li>Операционная оптимизация</li>
+                            <li>Системы KPI и управления</li>
+                        </ul>
+                        <div class="service-cta">
+                            <button class="service-button">Подробнее</button>
+                        </div>
                     </div>
-                    <h3 class="service-title">Управленческий и стратегический консалтинг</h3>
-                    <p class="service-description">
-                        Разработка бизнес-стратегии, выход на рынок ОАЭ и GCC, реструктуризация, оптимизация и цифровая трансформация
-                    </p>
-                    <ul class="service-features">
-                        <li>Бизнес-стратегия и стратегическое планирование</li>
-                        <li>Стратегия выхода на рынок (UAE, DIFC, GCC)</li>
-                        <li>Операционная оптимизация и снижение затрат</li>
-                        <li>Системы KPI и управления эффективностью</li>
-                    </ul>
-                    <button class="service-button">Узнать подробнее</button>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <rect x="8" y="12" width="24" height="20" rx="2" stroke="currentColor" stroke-width="2"/>
-                            <path d="M14 12V9C14 7.89543 14.8954 7 16 7H24C25.1046 7 26 7.89543 26 9V12" stroke="currentColor" stroke-width="2"/>
-                            <circle cx="20" cy="22" r="3" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                <div class="service-card" data-index="04">
+                    <div class="service-card-inner">
+                        <div class="service-number">04</div>
+                        <h3 class="service-title">Корпоративное структурирование</h3>
+                        <p class="service-description">
+                            Выбор юрисдикции, проектирование холдинговых структур и структурирование UBO
+                        </p>
+                        <ul class="service-features">
+                            <li>Консультации по юрисдикции (DIFC, зоны)</li>
+                            <li>Групповые и холдинговые структуры</li>
+                            <li>Структурирование акционеров и UBO</li>
+                            <li>SPV и целевые структуры</li>
+                        </ul>
+                        <div class="service-cta">
+                            <button class="service-button">Подробнее</button>
+                        </div>
                     </div>
-                    <h3 class="service-title">Корпоративное структурирование</h3>
-                    <p class="service-description">
-                        Выбор юрисдикции (DIFC, свободные зоны, материковый ОАЭ), проектирование холдинговых структур и структурирование UBO
-                    </p>
-                    <ul class="service-features">
-                        <li>Консультации по юрисдикции (DIFC, зоны, offshore)</li>
-                        <li>Групповые и холдинговые структуры</li>
-                        <li>Структурирование акционеров и UBO</li>
-                        <li>SPV и специальные целевые структуры</li>
-                    </ul>
-                    <button class="service-button">Узнать подробнее</button>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <path d="M12 7L7 12V28L12 33H28L33 28V12L28 7H12Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                            <path d="M15 20L19 24L27 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                <div class="service-card" data-index="05">
+                    <div class="service-card-inner">
+                        <div class="service-number">05</div>
+                        <h3 class="service-title">Регистрация и сопровождение компаний</h3>
+                        <p class="service-description">
+                            Полное сопровождение регистрации, подготовка бизнес-планов и KYC документации
+                        </p>
+                        <ul class="service-features">
+                            <li>Подготовка бизнес-планов</li>
+                            <li>KYC и комплаенс документация</li>
+                            <li>Координация с банками</li>
+                            <li>Бухгалтерия, НДС, ESR отчетность</li>
+                        </ul>
+                        <div class="service-cta">
+                            <button class="service-button">Подробнее</button>
+                        </div>
                     </div>
-                    <h3 class="service-title">Регистрация и сопровождение компаний</h3>
-                    <p class="service-description">
-                        Полное сопровождение регистрации, подготовка бизнес-планов, KYC документации, координация с банками и регистраторами
-                    </p>
-                    <ul class="service-features">
-                        <li>Подготовка бизнес-планов и документов</li>
-                        <li>KYC и комплаенс документация</li>
-                        <li>Координация с банками и офисами</li>
-                        <li>Бухгалтерия, НДС, ESR, UBO отчетность</li>
-                    </ul>
-                    <button class="service-button">Узнать подробнее</button>
                 </div>
 
-                <div class="service-card">
-                    <div class="service-icon">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <path d="M7.5 12.5L20 5L32.5 12.5V27.5L20 35L7.5 27.5V12.5Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
-                            <path d="M20 5V20M20 20L7.5 12.5M20 20L32.5 12.5M20 20V35" stroke="currentColor" stroke-width="2"/>
-                        </svg>
+                <div class="service-card" data-index="06">
+                    <div class="service-card-inner">
+                        <div class="service-number">06</div>
+                        <h3 class="service-title">Риск-менеджмент и внутренний контроль</h3>
+                        <p class="service-description">
+                            Корпоративное управление, системы управления рисками и внутреннего контроля
+                        </p>
+                        <ul class="service-features">
+                            <li>Corporate Governance frameworks</li>
+                            <li>Системы управления рисками</li>
+                            <li>Внутренний контроль</li>
+                            <li>Реинжиниринг бизнес-процессов</li>
+                        </ul>
+                        <div class="service-cta">
+                            <button class="service-button">Подробнее</button>
+                        </div>
                     </div>
-                    <h3 class="service-title">Риск-менеджмент и внутренний контроль</h3>
-                    <p class="service-description">
-                        Корпоративное управление (Corporate Governance), системы управления рисками и внутреннего контроля
-                    </p>
-                    <ul class="service-features">
-                        <li>Разработка Corporate Governance frameworks</li>
-                        <li>Системы управления рисками</li>
-                        <li>Системы внутреннего контроля</li>
-                        <li>Реинжиниринг бизнес-процессов</li>
-                    </ul>
-                    <button class="service-button">Узнать подробнее</button>
                 </div>
             </div>
         </div>
@@ -223,81 +234,55 @@
     <!-- Why Us Section -->
     <section id="why-us" class="why-us">
         <div class="container">
-            <div class="why-us-content">
-                <div class="why-us-text">
-                    <span class="section-badge">Почему мы</span>
-                    <h2 class="section-title">Ваш надежный партнер в ОАЭ</h2>
-                    <p class="why-us-description">
-                        Мы предоставляем комплексные решения для успешного ведения бизнеса в Объединенных Арабских Эмиратах
-                    </p>
-
-                    <div class="benefits-list">
-                        <div class="benefit-item">
-                            <div class="benefit-icon">✓</div>
-                            <div class="benefit-content">
-                                <h4>Экспертность</h4>
-                                <p>Более 10 лет опыта работы на рынке ОАЭ</p>
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">✓</div>
-                            <div class="benefit-content">
-                                <h4>Прозрачность</h4>
-                                <p>Четкие цены без скрытых комиссий</p>
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">✓</div>
-                            <div class="benefit-content">
-                                <h4>Комплексный подход</h4>
-                                <p>Все услуги в одном месте - от регистрации до аудита</p>
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">✓</div>
-                            <div class="benefit-content">
-                                <h4>Индивидуальный подход</h4>
-                                <p>Решения, адаптированные под ваш бизнес</p>
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">✓</div>
-                            <div class="benefit-content">
-                                <h4>Быстрые сроки</h4>
-                                <p>Оптимизированные процессы для экономии времени</p>
-                            </div>
-                        </div>
-                        <div class="benefit-item">
-                            <div class="benefit-icon">✓</div>
-                            <div class="benefit-content">
-                                <h4>Поддержка 24/7</h4>
-                                <p>Всегда на связи для решения ваших вопросов</p>
-                            </div>
-                        </div>
+            <div class="why-us-layout">
+                <div class="why-us-left">
+                    <div class="section-eyebrow">
+                        <div class="eyebrow-diamond"></div>
+                        <span>Почему мы</span>
                     </div>
+                    <h2 class="section-title">Ваш надежный<br>партнер в ОАЭ</h2>
+                    <p class="why-us-description">
+                        Более 10 лет мы помогаем компаниям успешно выходить на рынок
+                        Объединенных Арабских Эмиратов и развивать бизнес в регионе.
+                    </p>
+                    <a href="#contact" class="btn-primary">
+                        <span>Начать сотрудничество</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M11 5L16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
                 </div>
-                <div class="why-us-image">
-                    <div class="image-wrapper">
-                        <div class="floating-card card-1">
-                            <div class="card-icon">📊</div>
-                            <div class="card-text">
-                                <div class="card-title">500+</div>
-                                <div class="card-subtitle">Успешных проектов</div>
-                            </div>
+                <div class="why-us-right">
+                    <div class="benefits-grid">
+                        <div class="benefit-card">
+                            <div class="benefit-number">I</div>
+                            <h4>Экспертность</h4>
+                            <p>Более 10 лет глубокого опыта работы на рынке ОАЭ и GCC</p>
                         </div>
-                        <div class="floating-card card-2">
-                            <div class="card-icon">⭐</div>
-                            <div class="card-text">
-                                <div class="card-title">98%</div>
-                                <div class="card-subtitle">Удовлетворенность</div>
-                            </div>
+                        <div class="benefit-card">
+                            <div class="benefit-number">II</div>
+                            <h4>Прозрачность</h4>
+                            <p>Четкие цены и условия без скрытых комиссий и неожиданностей</p>
                         </div>
-                        <div class="floating-card card-3">
-                            <div class="card-icon">🚀</div>
-                            <div class="card-text">
-                                <div class="card-title">24/7</div>
-                                <div class="card-subtitle">Поддержка</div>
-                            </div>
+                        <div class="benefit-card">
+                            <div class="benefit-number">III</div>
+                            <h4>Комплексный подход</h4>
+                            <p>Все услуги в одном месте — от регистрации до аудита</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-number">IV</div>
+                            <h4>Индивидуальные решения</h4>
+                            <p>Стратегии, адаптированные под конкретные задачи вашего бизнеса</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-number">V</div>
+                            <h4>Оперативность</h4>
+                            <p>Оптимизированные процессы для максимальной экономии времени</p>
+                        </div>
+                        <div class="benefit-card">
+                            <div class="benefit-number">VI</div>
+                            <h4>Поддержка 24/7</h4>
+                            <p>Всегда на связи для решения любых ваших вопросов</p>
                         </div>
                     </div>
                 </div>
@@ -308,50 +293,62 @@
     <!-- Process Section -->
     <section id="process" class="process">
         <div class="container">
-            <div class="section-header">
-                <span class="section-badge">Как мы работаем</span>
-                <h2 class="section-title">Простой процесс в 5 шагов</h2>
-                <p class="section-description">
-                    От первой консультации до запуска вашего бизнеса
-                </p>
+            <div class="section-header section-header--center">
+                <div class="section-eyebrow">
+                    <div class="eyebrow-diamond"></div>
+                    <span>Как мы работаем</span>
+                </div>
+                <h2 class="section-title">Простой процесс<br>в 5 шагов</h2>
             </div>
 
             <div class="process-timeline">
+                <div class="timeline-line"></div>
                 <div class="process-step">
-                    <div class="step-number">01</div>
+                    <div class="step-marker">
+                        <div class="step-dot"></div>
+                    </div>
                     <div class="step-content">
+                        <div class="step-number">01</div>
                         <h3>Консультация</h3>
-                        <p>Бесплатная консультация для определения оптимальной структуры вашего бизнеса</p>
+                        <p>Бесплатная консультация для определения оптимальной структуры вашего бизнеса в ОАЭ</p>
                     </div>
                 </div>
-                <div class="process-connector"></div>
                 <div class="process-step">
-                    <div class="step-number">02</div>
+                    <div class="step-marker">
+                        <div class="step-dot"></div>
+                    </div>
                     <div class="step-content">
+                        <div class="step-number">02</div>
                         <h3>Подготовка документов</h3>
-                        <p>Сбор и подготовка всех необходимых документов для регистрации</p>
+                        <p>Сбор и подготовка всех необходимых документов для регистрации компании</p>
                     </div>
                 </div>
-                <div class="process-connector"></div>
                 <div class="process-step">
-                    <div class="step-number">03</div>
+                    <div class="step-marker">
+                        <div class="step-dot"></div>
+                    </div>
                     <div class="step-content">
+                        <div class="step-number">03</div>
                         <h3>Регистрация</h3>
                         <p>Подача документов и получение лицензии на ведение деятельности</p>
                     </div>
                 </div>
-                <div class="process-connector"></div>
                 <div class="process-step">
-                    <div class="step-number">04</div>
+                    <div class="step-marker">
+                        <div class="step-dot"></div>
+                    </div>
                     <div class="step-content">
+                        <div class="step-number">04</div>
                         <h3>Открытие счета</h3>
-                        <p>Помощь в открытии корпоративного банковского счета</p>
+                        <p>Помощь в открытии корпоративного банковского счета в ОАЭ</p>
                     </div>
                 </div>
-                <div class="process-connector"></div>
                 <div class="process-step">
-                    <div class="step-number">05</div>
+                    <div class="step-marker">
+                        <div class="step-dot"></div>
+                    </div>
                     <div class="step-content">
+                        <div class="step-number">05</div>
                         <h3>Запуск бизнеса</h3>
                         <p>Постоянная поддержка и консультации на всех этапах развития</p>
                     </div>
@@ -362,19 +359,21 @@
 
     <!-- CTA Section -->
     <section class="cta-section">
+        <div class="cta-pattern"></div>
         <div class="container">
             <div class="cta-content">
-                <h2 class="cta-title">Готовы начать свой бизнес в ОАЭ?</h2>
+                <div class="cta-diamond"></div>
+                <h2 class="cta-title">Готовы начать свой<br>бизнес в ОАЭ?</h2>
                 <p class="cta-description">
-                    Получите бесплатную консультацию от наших экспертов уже сегодня
+                    Получите бесплатную консультацию от наших экспертов
                 </p>
                 <div class="cta-buttons">
-                    <button class="btn-primary">
-                        Получить консультацию
-                    </button>
-                    <button class="btn-secondary-light">
-                        Связаться с нами
-                    </button>
+                    <a href="#contact" class="btn-primary btn-primary--light">
+                        <span>Получить консультацию</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M11 5L16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </a>
                 </div>
             </div>
         </div>
@@ -385,65 +384,69 @@
         <div class="container">
             <div class="contact-wrapper">
                 <div class="contact-info">
-                    <h2>Свяжитесь с нами</h2>
-                    <p>Мы всегда готовы ответить на ваши вопросы</p>
+                    <div class="section-eyebrow">
+                        <div class="eyebrow-diamond"></div>
+                        <span>Контакты</span>
+                    </div>
+                    <h2 class="section-title">Свяжитесь<br>с нами</h2>
+                    <p class="contact-subtitle">Мы всегда готовы ответить на ваши вопросы</p>
 
                     <div class="contact-details">
                         <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div class="contact-text">
-                                <div class="contact-label">Телефон</div>
-                                <div class="contact-value">+971 50 123 4567</div>
-                            </div>
+                            <div class="contact-label">Телефон</div>
+                            <div class="contact-value">+971 50 123 4567</div>
                         </div>
+                        <div class="contact-divider"></div>
                         <div class="contact-item">
-                            <div class="contact-icon">✉️</div>
-                            <div class="contact-text">
-                                <div class="contact-label">Email</div>
-                                <div class="contact-value">info@cep-uae.com</div>
-                            </div>
+                            <div class="contact-label">Email</div>
+                            <div class="contact-value">info@cep-uae.com</div>
                         </div>
+                        <div class="contact-divider"></div>
                         <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div class="contact-text">
-                                <div class="contact-label">Адрес</div>
-                                <div class="contact-value">Dubai, UAE</div>
-                            </div>
+                            <div class="contact-label">Адрес</div>
+                            <div class="contact-value">Dubai, UAE</div>
                         </div>
                     </div>
                 </div>
 
-                <form class="contact-form">
-                    <div class="form-group">
-                        <label for="name">Имя</label>
-                        <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                <form class="contact-form" novalidate>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">Имя</label>
+                            <input type="text" id="name" name="name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="your@email.com" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="phone">Телефон</label>
-                        <input type="tel" id="phone" name="phone" placeholder="+971 50 123 4567">
-                    </div>
-                    <div class="form-group">
-                        <label for="service">Интересующая услуга</label>
-                        <select id="service" name="service">
-                            <option value="">Выберите услугу</option>
-                            <option value="financial">Финансовый анализ и моделирование</option>
-                            <option value="valuation">Оценка бизнеса и корпоративные финансы</option>
-                            <option value="strategy">Управленческий и стратегический консалтинг</option>
-                            <option value="structuring">Корпоративное структурирование</option>
-                            <option value="registration">Регистрация и сопровождение компаний</option>
-                            <option value="risk">Риск-менеджмент и внутренний контроль</option>
-                        </select>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+971 50 123 4567">
+                        </div>
+                        <div class="form-group">
+                            <label for="service">Интересующая услуга</label>
+                            <select id="service" name="service">
+                                <option value="">Выберите услугу</option>
+                                <option value="financial">Финансовый анализ</option>
+                                <option value="valuation">Оценка бизнеса</option>
+                                <option value="strategy">Стратегический консалтинг</option>
+                                <option value="structuring">Корпоративное структурирование</option>
+                                <option value="registration">Регистрация компаний</option>
+                                <option value="risk">Риск-менеджмент</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="message">Сообщение</label>
                         <textarea id="message" name="message" rows="4" placeholder="Расскажите о вашем проекте"></textarea>
                     </div>
-                    <button type="submit" class="btn-primary full-width">
-                        Отправить заявку
+                    <button type="submit" class="btn-primary btn-full">
+                        <span>Отправить заявку</span>
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10H16M11 5L16 10L11 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </button>
                 </form>
             </div>
@@ -453,40 +456,44 @@
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <div class="footer-logo">
-                        <span class="logo-icon">✦</span>
-                        <span class="logo-text">Consulting Expert Partner</span>
-                    </div>
-                    <p class="footer-description">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <a href="#home" class="logo">
+                        <div class="logo-diamond"></div>
+                        <span class="logo-text">CEP</span>
+                        <span class="logo-divider"></span>
+                        <span class="logo-full">Consulting Expert Partner</span>
+                    </a>
+                    <p class="footer-tagline">
                         Ваш надежный партнер в открытии и развитии бизнеса в ОАЭ
                     </p>
                 </div>
-                <div class="footer-column">
-                    <h4>Услуги</h4>
-                    <ul>
-                        <li><a href="#services">Регистрация компаний</a></li>
-                        <li><a href="#services">Бухгалтерия</a></li>
-                        <li><a href="#services">Налоговый консалтинг</a></li>
-                        <li><a href="#services">Визовая поддержка</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Компания</h4>
-                    <ul>
-                        <li><a href="#why-us">О нас</a></li>
-                        <li><a href="#process">Как мы работаем</a></li>
-                        <li><a href="#contact">Контакты</a></li>
-                    </ul>
-                </div>
-                <div class="footer-column">
-                    <h4>Контакты</h4>
-                    <ul>
-                        <li>+971 50 123 4567</li>
-                        <li>info@cep-uae.com</li>
-                        <li>Dubai, UAE</li>
-                    </ul>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Услуги</h4>
+                        <ul>
+                            <li><a href="#services">Финансовый анализ</a></li>
+                            <li><a href="#services">Оценка бизнеса</a></li>
+                            <li><a href="#services">Стратегический консалтинг</a></li>
+                            <li><a href="#services">Регистрация компаний</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Компания</h4>
+                        <ul>
+                            <li><a href="#why-us">О нас</a></li>
+                            <li><a href="#process">Процесс</a></li>
+                            <li><a href="#contact">Контакты</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Контакты</h4>
+                        <ul>
+                            <li>+971 50 123 4567</li>
+                            <li>info@cep-uae.com</li>
+                            <li>Dubai, UAE</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
             <div class="footer-bottom">

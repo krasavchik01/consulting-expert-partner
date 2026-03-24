@@ -1,31 +1,36 @@
-// Smooth Scrolling
+// ============================================
+// CONSULTING EXPERT PARTNER — Desert Noir Luxury
+// ============================================
+
+// Smooth scrolling for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            // Close mobile menu if open
+            navMenu?.classList.remove('active');
+            burgerMenu?.classList.remove('active');
         }
     });
 });
 
-// Navbar Scroll Effect
-let lastScroll = 0;
+// Navbar scroll effect
 const navbar = document.querySelector('.navbar');
+let lastScroll = 0;
 
 window.addEventListener('scroll', () => {
     const currentScroll = window.pageYOffset;
 
-    if (currentScroll <= 0) {
-        navbar.style.boxShadow = 'none';
+    if (currentScroll > 60) {
+        navbar.classList.add('scrolled');
     } else {
-        navbar.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.1)';
+        navbar.classList.remove('scrolled');
     }
 
-    if (currentScroll > lastScroll && currentScroll > 80) {
+    if (currentScroll > lastScroll && currentScroll > 200) {
         navbar.style.transform = 'translateY(-100%)';
     } else {
         navbar.style.transform = 'translateY(0)';
@@ -34,7 +39,7 @@ window.addEventListener('scroll', () => {
     lastScroll = currentScroll;
 });
 
-// Burger Menu Toggle
+// Burger menu toggle
 const burgerMenu = document.querySelector('.burger-menu');
 const navMenu = document.querySelector('.nav-menu');
 
@@ -42,100 +47,98 @@ burgerMenu?.addEventListener('click', () => {
     navMenu.classList.toggle('active');
     burgerMenu.classList.toggle('active');
 
-    // Animate burger menu
     const spans = burgerMenu.querySelectorAll('span');
     if (burgerMenu.classList.contains('active')) {
-        spans[0].style.transform = 'rotate(45deg) translate(8px, 8px)';
+        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
         spans[1].style.opacity = '0';
-        spans[2].style.transform = 'rotate(-45deg) translate(8px, -8px)';
+        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
     } else {
-        spans[0].style.transform = 'none';
-        spans[1].style.opacity = '1';
-        spans[2].style.transform = 'none';
+        spans.forEach(s => {
+            s.style.transform = 'none';
+            s.style.opacity = '1';
+        });
     }
 });
 
-// Intersection Observer for Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
+// Intersection Observer — scroll-triggered reveals
+const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
+            entry.target.classList.add('visible');
         }
     });
-}, observerOptions);
-
-// Observe service cards
-document.querySelectorAll('.service-card').forEach((card, index) => {
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(30px)';
-    card.style.transition = `all 0.6s ease ${index * 0.1}s`;
-    observer.observe(card);
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -60px 0px'
 });
 
-// Observe benefit items
-document.querySelectorAll('.benefit-item').forEach((item, index) => {
-    item.style.opacity = '0';
-    item.style.transform = 'translateX(-30px)';
-    item.style.transition = `all 0.6s ease ${index * 0.1}s`;
-    observer.observe(item);
+// Apply reveal to key elements
+const revealSelectors = [
+    '.section-header',
+    '.section-eyebrow',
+    '.section-title',
+    '.section-description',
+    '.service-card',
+    '.benefit-card',
+    '.process-step',
+    '.contact-info',
+    '.contact-form',
+    '.why-us-left',
+    '.cta-content'
+];
+
+revealSelectors.forEach(selector => {
+    document.querySelectorAll(selector).forEach((el, i) => {
+        el.classList.add('reveal');
+        if (i < 6) {
+            el.classList.add(`reveal-delay-${Math.min(i + 1, 4)}`);
+        }
+        revealObserver.observe(el);
+    });
 });
 
-// Observe process steps
-document.querySelectorAll('.process-step').forEach((step, index) => {
-    step.style.opacity = '0';
-    step.style.transform = 'translateY(30px)';
-    step.style.transition = `all 0.6s ease ${index * 0.15}s`;
-    observer.observe(step);
-});
+// Counter animation for stat numbers
+const animateCounter = (element, target, suffix) => {
+    const duration = 2000;
+    const startTime = performance.now();
 
-// Counter Animation for Stats
-const animateCounter = (element, target, duration = 2000) => {
-    let start = 0;
-    const increment = target / (duration / 16);
+    const update = (currentTime) => {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.floor(eased * target);
 
-    const updateCounter = () => {
-        start += increment;
-        if (start < target) {
-            element.textContent = Math.floor(start) + (element.textContent.includes('%') ? '%' : '+');
-            requestAnimationFrame(updateCounter);
-        } else {
-            element.textContent = target + (element.textContent.includes('%') ? '%' : '+');
+        element.textContent = current + suffix;
+
+        if (progress < 1) {
+            requestAnimationFrame(update);
         }
     };
 
-    updateCounter();
+    requestAnimationFrame(update);
 };
 
-// Observe stats for counter animation
 const statsObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
-            const statNumber = entry.target.querySelector('.stat-number');
-            const text = statNumber.textContent;
-            const number = parseInt(text.replace(/\D/g, ''));
+            const el = entry.target;
+            const text = el.textContent;
+            const target = parseInt(text.replace(/\D/g, ''));
+            const suffix = text.includes('%') ? '%' : '+';
 
-            statNumber.textContent = '0' + (text.includes('%') ? '%' : '+');
+            el.textContent = '0' + suffix;
+            setTimeout(() => animateCounter(el, target, suffix), 200);
 
-            setTimeout(() => {
-                animateCounter(statNumber, number);
-            }, 300);
-
-            statsObserver.unobserve(entry.target);
+            statsObserver.unobserve(el);
         }
     });
 }, { threshold: 0.5 });
 
-document.querySelectorAll('.stat-item').forEach(stat => {
+document.querySelectorAll('.stat-number').forEach(stat => {
     statsObserver.observe(stat);
 });
 
-// Form Handling
+// Form handling
 const contactForm = document.querySelector('.contact-form');
 
 contactForm?.addEventListener('submit', (e) => {
@@ -143,192 +146,67 @@ contactForm?.addEventListener('submit', (e) => {
 
     const formData = new FormData(contactForm);
     const data = Object.fromEntries(formData);
-
     console.log('Form submitted:', data);
 
-    // Show success message
     const button = contactForm.querySelector('.btn-primary');
-    const originalText = button.textContent;
+    const buttonSpan = button.querySelector('span');
+    const originalText = buttonSpan.textContent;
 
-    button.textContent = 'Отправлено!';
-    button.style.background = 'linear-gradient(135deg, #4ade80 0%, #16a34a 100%)';
+    buttonSpan.textContent = 'Отправлено!';
+    button.style.background = '#2d6a4f';
+    button.style.pointerEvents = 'none';
 
     setTimeout(() => {
-        button.textContent = originalText;
+        buttonSpan.textContent = originalText;
         button.style.background = '';
+        button.style.pointerEvents = '';
         contactForm.reset();
     }, 3000);
 });
 
-// CTA Button Handlers
-const ctaButtons = document.querySelectorAll('.cta-button, .hero-buttons .btn-primary, .cta-section .btn-primary');
-
-ctaButtons.forEach(button => {
+// Service button click → scroll to contact with pre-filled service
+document.querySelectorAll('.service-button').forEach(button => {
     button.addEventListener('click', () => {
-        const contactSection = document.querySelector('#contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-
-            setTimeout(() => {
-                const firstInput = contactForm?.querySelector('input');
-                firstInput?.focus();
-            }, 800);
-        }
-    });
-});
-
-// Service Button Handlers
-const serviceButtons = document.querySelectorAll('.service-button');
-
-serviceButtons.forEach(button => {
-    button.addEventListener('click', (e) => {
-        const card = e.target.closest('.service-card');
+        const card = button.closest('.service-card');
         const serviceName = card.querySelector('.service-title').textContent;
-
         const contactSection = document.querySelector('#contact');
+
         if (contactSection) {
             contactSection.scrollIntoView({ behavior: 'smooth' });
 
             setTimeout(() => {
                 const serviceSelect = contactForm?.querySelector('#service');
-                const messageTextarea = contactForm?.querySelector('#message');
+                const messageArea = contactForm?.querySelector('#message');
 
-                if (serviceSelect && messageTextarea) {
-                    // Try to match service name with select option
+                if (serviceSelect) {
                     const options = Array.from(serviceSelect.options);
-                    const matchingOption = options.find(option =>
-                        serviceName.toLowerCase().includes(option.text.toLowerCase().split(' ')[0])
+                    const match = options.find(opt =>
+                        serviceName.toLowerCase().includes(opt.text.toLowerCase().split(' ')[0])
                     );
+                    if (match) serviceSelect.value = match.value;
+                }
 
-                    if (matchingOption) {
-                        serviceSelect.value = matchingOption.value;
-                    }
-
-                    messageTextarea.value = `Здравствуйте! Меня интересует услуга: ${serviceName}. `;
-                    messageTextarea.focus();
+                if (messageArea) {
+                    messageArea.value = `Здравствуйте! Меня интересует услуга: ${serviceName}. `;
+                    messageArea.focus();
                 }
             }, 800);
         }
     });
 });
 
-// Parallax Effect for Hero Orbs
-let ticking = false;
+// CTA buttons → scroll to contact
+document.querySelectorAll('.btn-primary').forEach(button => {
+    if (button.closest('.contact-form')) return;
+    if (button.getAttribute('href') === '#contact' || button.closest('a[href="#contact"]')) return;
 
-window.addEventListener('scroll', () => {
-    if (!ticking) {
-        window.requestAnimationFrame(() => {
-            const scrolled = window.pageYOffset;
-            const orbs = document.querySelectorAll('.gradient-orb');
-
-            orbs.forEach((orb, index) => {
-                const speed = 0.3 + (index * 0.1);
-                orb.style.transform = `translateY(${scrolled * speed}px)`;
-            });
-
-            ticking = false;
-        });
-
-        ticking = true;
-    }
-});
-
-// Floating Cards Animation Enhancement
-const floatingCards = document.querySelectorAll('.floating-card');
-
-floatingCards.forEach((card, index) => {
-    card.addEventListener('mouseenter', () => {
-        card.style.transform = 'scale(1.05) translateY(-10px)';
-        card.style.transition = 'transform 0.3s ease';
-    });
-
-    card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-    });
-});
-
-// Add hover effect to service cards
-document.querySelectorAll('.service-card').forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.zIndex = '10';
-    });
-
-    card.addEventListener('mouseleave', function() {
-        this.style.zIndex = '1';
-    });
-});
-
-// Mobile Menu Handling
-if (window.innerWidth <= 768) {
-    const navLinks = document.querySelectorAll('.nav-menu a');
-
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            navMenu.classList.remove('active');
-            burgerMenu.classList.remove('active');
-
-            const spans = burgerMenu.querySelectorAll('span');
-            spans[0].style.transform = 'none';
-            spans[1].style.opacity = '1';
-            spans[2].style.transform = 'none';
-        });
-    });
-}
-
-// Add mobile menu styles dynamically
-const style = document.createElement('style');
-style.textContent = `
-    @media (max-width: 768px) {
-        .nav-menu.active {
-            display: flex;
-            flex-direction: column;
-            position: fixed;
-            top: 80px;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(20px);
-            padding: 40px 24px;
-            gap: 24px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-            animation: slideDown 0.3s ease;
-            z-index: 999;
+    button.addEventListener('click', () => {
+        const contactSection = document.querySelector('#contact');
+        if (contactSection) {
+            contactSection.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                contactForm?.querySelector('input')?.focus();
+            }, 800);
         }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .nav-menu.active a {
-            font-size: 18px;
-            padding: 12px 0;
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Smooth reveal on page load
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
+    });
 });
-
-// Add loading animation
-document.addEventListener('DOMContentLoaded', () => {
-    // Preload animations
-    setTimeout(() => {
-        document.body.classList.add('loaded');
-    }, 500);
-});
-
-console.log('Consulting Expert Partner Ltd - Website Loaded Successfully');

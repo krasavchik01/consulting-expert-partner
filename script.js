@@ -7,9 +7,9 @@ const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 let particles = [];
 let mouse = { x: -1000, y: -1000 };
-const PARTICLE_COUNT = 60;
-const CONNECT_DIST = 160;
-const MOUSE_DIST = 200;
+const PARTICLE_COUNT = 100;
+const CONNECT_DIST = 200;
+const MOUSE_DIST = 280;
 
 function resizeCanvas() {
     canvas.width = window.innerWidth;
@@ -25,12 +25,12 @@ class Particle {
         this.y = Math.random() * canvas.height;
         this.vx = (Math.random() - 0.5) * 0.4;
         this.vy = (Math.random() - 0.5) * 0.4;
-        this.r = Math.random() * 2 + 0.5;
+        this.r = Math.random() * 3 + 1.5;
         // Shape: 0=circle, 1=triangle, 2=square, 3=diamond
         this.shape = Math.floor(Math.random() * 4);
         this.rotation = Math.random() * Math.PI * 2;
-        this.rotSpeed = (Math.random() - 0.5) * 0.01;
-        this.baseAlpha = Math.random() * 0.4 + 0.15;
+        this.rotSpeed = (Math.random() - 0.5) * 0.015;
+        this.baseAlpha = Math.random() * 0.5 + 0.35;
         this.alpha = this.baseAlpha;
     }
     update() {
@@ -46,7 +46,7 @@ class Particle {
             const force = (MOUSE_DIST - dist) / MOUSE_DIST * 0.02;
             this.vx += dx * force;
             this.vy += dy * force;
-            this.alpha = this.baseAlpha + (1 - dist / MOUSE_DIST) * 0.4;
+            this.alpha = this.baseAlpha + (1 - dist / MOUSE_DIST) * 0.6;
         } else {
             this.alpha += (this.baseAlpha - this.alpha) * 0.05;
         }
@@ -66,8 +66,12 @@ class Particle {
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         ctx.fillStyle = `rgba(212,168,83,${this.alpha})`;
-        ctx.strokeStyle = `rgba(212,168,83,${this.alpha * 0.6})`;
-        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = `rgba(212,168,83,${this.alpha * 0.9})`;
+        ctx.lineWidth = 1.2;
+
+        // Glow effect
+        ctx.shadowColor = 'rgba(212,168,83,0.5)';
+        ctx.shadowBlur = 8;
 
         const s = this.r * 2.5;
         switch (this.shape) {
@@ -115,13 +119,16 @@ function drawConnections() {
             const dy = particles[i].y - particles[j].y;
             const dist = Math.sqrt(dx * dx + dy * dy);
             if (dist < CONNECT_DIST) {
-                const alpha = (1 - dist / CONNECT_DIST) * 0.12;
+                const alpha = (1 - dist / CONNECT_DIST) * 0.35;
                 ctx.beginPath();
                 ctx.moveTo(particles[i].x, particles[i].y);
                 ctx.lineTo(particles[j].x, particles[j].y);
                 ctx.strokeStyle = `rgba(212,168,83,${alpha})`;
-                ctx.lineWidth = 0.5;
+                ctx.lineWidth = 0.8;
+                ctx.shadowColor = 'rgba(212,168,83,0.15)';
+                ctx.shadowBlur = 4;
                 ctx.stroke();
+                ctx.shadowBlur = 0;
             }
         }
     }

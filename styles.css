@@ -40,14 +40,14 @@ body{
 #bg-canvas{
   position:fixed;inset:0;z-index:0;
   pointer-events:none;
-  opacity:.6;
+  opacity:1;
 }
 
 /* Cursor glow */
 .cursor-glow{
   position:fixed;width:320px;height:320px;
   border-radius:50%;
-  background:radial-gradient(circle,rgba(212,168,83,.08) 0%,transparent 70%);
+  background:radial-gradient(circle,rgba(212,168,83,.18) 0%,transparent 70%);
   pointer-events:none;z-index:1;
   transform:translate(-50%,-50%);
   transition:opacity .4s;

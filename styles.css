@@ -357,10 +357,61 @@ body:hover .cursor-glow{opacity:1}
 .footer-bar{padding-top:32px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--txt3)}
 
 /* =============== ANIMATIONS =============== */
-[data-reveal]{opacity:0;transform:translateY(28px);transition:all .8s var(--ease)}
+
+/* Base reveal — slide up + fade */
+[data-reveal]{
+  opacity:0;transform:translateY(32px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
 [data-reveal].visible{opacity:1;transform:translateY(0)}
-[data-reveal-word]{display:inline-block;opacity:0;transform:translateY(100%);transition:all .7s var(--ease)}
+
+/* Hero word reveal */
+[data-reveal-word]{
+  display:inline-block;opacity:0;
+  transform:translateY(100%);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
 [data-reveal-word].visible{opacity:1;transform:translateY(0)}
+
+/* Cards — slide up + scale from 0.95 */
+.srv-card,.benefit{
+  opacity:0;transform:translateY(40px) scale(.97);
+  transition:opacity .6s var(--ease),transform .6s var(--ease),background .4s ease;
+}
+.srv-card.visible,.benefit.visible{
+  opacity:1;transform:translateY(0) scale(1);
+}
+
+/* Timeline steps — slide from left */
+.timeline-step{
+  opacity:0;transform:translateX(-24px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);
+}
+.timeline-step.visible{opacity:1;transform:translateX(0)}
+
+/* CTA — scale up */
+.cta-inner{
+  opacity:0;transform:scale(.94);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+.cta-inner.visible{opacity:1;transform:scale(1)}
+
+/* Contact info — slide from left */
+.contact-info{
+  opacity:0;transform:translateX(-32px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+.contact-info.visible{opacity:1;transform:translateX(0)}
+
+/* Form — slide from right */
+.form{
+  opacity:0;transform:translateX(32px);
+  transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+.form.visible{opacity:1;transform:translateX(0)}
+
+/* Floating background shapes — mobile CSS-only alternative to canvas */
+.mobile-bg-shapes{display:none}
 
 /* =============== RESPONSIVE =============== */
 @media(max-width:1024px){
@@ -382,6 +433,60 @@ body:hover .cursor-glow{opacity:1}
   }
   .nav-menu.active a{font-size:18px;letter-spacing:.12em}
 
+  /* Hide canvas, show CSS shapes */
+  #bg-canvas{display:none!important}
+  .cursor-glow{display:none}
+  .scroll-cue{display:none}
+
+  /* Floating CSS shapes as background */
+  .hero{position:relative;overflow:hidden}
+  .hero::before,.hero::after{
+    content:'';position:absolute;
+    border:1px solid rgba(212,168,83,.15);
+    border-radius:2px;pointer-events:none;z-index:0;
+  }
+  .hero::before{
+    width:120px;height:120px;top:15%;right:-20px;
+    transform:rotate(45deg);
+    animation:floatShape1 12s ease-in-out infinite;
+  }
+  .hero::after{
+    width:80px;height:80px;bottom:20%;left:-10px;
+    border-radius:50%;
+    animation:floatShape2 10s ease-in-out infinite;
+  }
+  @keyframes floatShape1{
+    0%,100%{transform:rotate(45deg) translate(0,0);opacity:.15}
+    50%{transform:rotate(55deg) translate(-10px,20px);opacity:.25}
+  }
+  @keyframes floatShape2{
+    0%,100%{transform:translate(0,0);opacity:.1}
+    50%{transform:translate(15px,-15px);opacity:.2}
+  }
+
+  /* Additional floating elements on sections */
+  .services::after{
+    content:'';position:absolute;right:10px;top:60px;
+    width:60px;height:60px;
+    border:1px solid rgba(212,168,83,.1);
+    transform:rotate(45deg);
+    animation:floatShape1 14s ease-in-out infinite;
+  }
+  .why-us::after{
+    content:'';position:absolute;left:10px;bottom:80px;
+    width:40px;height:40px;border-radius:50%;
+    border:1px solid rgba(212,168,83,.12);
+    animation:floatShape2 8s ease-in-out infinite;
+  }
+  .process::after{
+    content:'';position:absolute;right:20px;top:40%;
+    width:50px;height:50px;
+    border:1px solid rgba(212,168,83,.08);
+    transform:rotate(30deg);
+    animation:floatShape1 16s ease-in-out infinite;
+  }
+
+  /* Hero */
   .hero{padding:100px 0 60px}
   .hero-metrics{
     flex-direction:row;gap:0;
@@ -396,7 +501,7 @@ body:hover .cursor-glow{opacity:1}
   .metric-val,.metric-suffix{font-size:28px}
   .metric-label{font-size:11px}
 
-  /* Services — cards with borders on mobile */
+  /* Service cards — slide up with stagger */
   .srv-grid{
     grid-template-columns:1fr;
     gap:16px;background:transparent;
@@ -406,8 +511,13 @@ body:hover .cursor-glow{opacity:1}
     border-radius:12px;
     padding:28px 24px;
     background:var(--card);
+    /* Mobile: slide from right with stagger via JS */
+    transform:translateX(40px) scale(.97);
   }
-  .srv-card:hover{background:var(--card-hover)}
+  .srv-card.visible{transform:translateX(0) scale(1)}
+  .srv-card:nth-child(even){transform:translateX(-40px) scale(.97)}
+  .srv-card:nth-child(even).visible{transform:translateX(0) scale(1)}
+
   .srv-idx{font-size:36px;margin-bottom:8px}
   .srv-card h3{font-size:18px}
   .srv-link{
@@ -417,7 +527,7 @@ body:hover .cursor-glow{opacity:1}
   }
   .srv-link::after{display:none}
 
-  /* Why us — cards with borders */
+  /* Benefits — alternating slide */
   .why-right{
     grid-template-columns:1fr;gap:12px;background:transparent;
   }
@@ -425,7 +535,10 @@ body:hover .cursor-glow{opacity:1}
     border:1px solid var(--border);border-radius:12px;
     padding:24px 20px;background:var(--card);
     display:flex;gap:16px;align-items:flex-start;
+    transform:translateX(30px);
   }
+  .benefit:nth-child(even){transform:translateX(-30px)}
+  .benefit.visible{transform:translateX(0) scale(1)!important}
   .benefit::before{display:none}
   .benefit-num{
     margin-bottom:0;font-size:16px;opacity:.6;
@@ -437,47 +550,65 @@ body:hover .cursor-glow{opacity:1}
   .benefit h4{font-size:16px;margin-bottom:4px}
   .benefit p{font-size:13px}
 
-  /* Process timeline — better mobile */
+  /* Timeline — each step slides from left with card */
   .timeline{padding-left:32px}
   .step-dot{
     left:-32px;width:12px;height:12px;
     border:2px solid var(--border-h);border-radius:50%;
     background:var(--surface);
+    transition:all .4s var(--ease);
   }
+  .timeline-step{transform:translateX(-20px)}
+  .timeline-step.visible{transform:translateX(0)}
   .timeline-step.active .step-dot{
     border-color:var(--copper);background:var(--copper);
+    box-shadow:0 0 12px rgba(212,168,83,.5);
   }
   .step-body{
     background:var(--card);border:1px solid var(--border);
     border-radius:12px;padding:20px;
+    transition:border-color .4s ease;
+  }
+  .timeline-step.active .step-body{
+    border-color:var(--border-h);
   }
   .step-body h3{font-size:18px}
 
-  /* Buttons bigger on mobile */
+  /* Buttons */
   .btn{padding:16px 28px;font-size:14px;border-radius:8px}
   .btn--fill{border-radius:8px}
   .btn--line{border-radius:0}
 
-  /* CTA band */
+  /* CTA */
   .cta-band{padding:64px 0}
   .cta-inner h2{font-size:28px}
   .cta-inner .btn{border-radius:8px}
 
-  /* Form */
+  /* Form & Contact */
   .form-2col{grid-template-columns:1fr}
   .form{padding:28px 20px;border-radius:12px}
+  .contact-info,.form{transform:translateY(32px)}
+  .contact-info.visible,.form.visible{transform:translateY(0)}
 
   /* Footer */
   .footer-grid{grid-template-columns:1fr;gap:24px}
 
   .services,.why-us,.process,.contact{padding:80px 0}
-  .scroll-cue{display:none}
-  .cursor-glow{display:none}
 
   /* Section headers */
   .sec-head{margin-bottom:40px}
   .sec-title{font-size:28px}
+
+  /* Gold accent line animation on sections */
+  .services::before,.why-us::before,.process::before,.contact::before{
+    animation:lineGlow 3s ease-in-out infinite alternate;
+  }
+  @keyframes lineGlow{
+    0%{opacity:.15}
+    100%{opacity:.5}
+  }
 }
+
 @media(max-width:480px){
   .container{padding:0 16px}
   .hero-title{font-size:36px}
@@ -488,6 +619,13 @@ body:hover .cursor-glow{opacity:1}
 
 /* Reduced motion */
 @media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}
-  [data-reveal],[data-reveal-word]{opacity:1;transform:none}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
+  [data-reveal],[data-reveal-word],.srv-card,.benefit,.timeline-step,
+  .cta-inner,.contact-info,.form{
+    opacity:1!important;transform:none!important;
+  }
 }

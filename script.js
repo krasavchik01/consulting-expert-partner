@@ -1,212 +1,298 @@
-// ============================================
-// CONSULTING EXPERT PARTNER — Desert Noir Luxury
-// ============================================
+// ==============================================
+// CEP — Architectural Noir v2 — Full Animations
+// ==============================================
 
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+// ——— CANVAS PARTICLE NETWORK ———
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: -1000, y: -1000 };
+const PARTICLE_COUNT = 60;
+const CONNECT_DIST = 160;
+const MOUSE_DIST = 200;
 
-            // Close mobile menu if open
-            navMenu?.classList.remove('active');
-            burgerMenu?.classList.remove('active');
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+
+class Particle {
+    constructor() {
+        this.reset();
+    }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.r = Math.random() * 2 + 0.5;
+        // Shape: 0=circle, 1=triangle, 2=square, 3=diamond
+        this.shape = Math.floor(Math.random() * 4);
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotSpeed = (Math.random() - 0.5) * 0.01;
+        this.baseAlpha = Math.random() * 0.4 + 0.15;
+        this.alpha = this.baseAlpha;
+    }
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.rotation += this.rotSpeed;
+
+        // Mouse interaction
+        const dx = this.x - mouse.x;
+        const dy = this.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < MOUSE_DIST) {
+            const force = (MOUSE_DIST - dist) / MOUSE_DIST * 0.02;
+            this.vx += dx * force;
+            this.vy += dy * force;
+            this.alpha = this.baseAlpha + (1 - dist / MOUSE_DIST) * 0.4;
+        } else {
+            this.alpha += (this.baseAlpha - this.alpha) * 0.05;
         }
+
+        // Damping
+        this.vx *= 0.99;
+        this.vy *= 0.99;
+
+        // Wrap
+        if (this.x < -20) this.x = canvas.width + 20;
+        if (this.x > canvas.width + 20) this.x = -20;
+        if (this.y < -20) this.y = canvas.height + 20;
+        if (this.y > canvas.height + 20) this.y = -20;
+    }
+    draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.fillStyle = `rgba(212,168,83,${this.alpha})`;
+        ctx.strokeStyle = `rgba(212,168,83,${this.alpha * 0.6})`;
+        ctx.lineWidth = 0.5;
+
+        const s = this.r * 2.5;
+        switch (this.shape) {
+            case 0: // Circle
+                ctx.beginPath();
+                ctx.arc(0, 0, this.r, 0, Math.PI * 2);
+                ctx.fill();
+                break;
+            case 1: // Triangle
+                ctx.beginPath();
+                ctx.moveTo(0, -s);
+                ctx.lineTo(s * 0.87, s * 0.5);
+                ctx.lineTo(-s * 0.87, s * 0.5);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+            case 2: // Square
+                ctx.strokeRect(-s / 2, -s / 2, s, s);
+                break;
+            case 3: // Diamond
+                ctx.beginPath();
+                ctx.moveTo(0, -s);
+                ctx.lineTo(s * 0.7, 0);
+                ctx.lineTo(0, s);
+                ctx.lineTo(-s * 0.7, 0);
+                ctx.closePath();
+                ctx.stroke();
+                break;
+        }
+        ctx.restore();
+    }
+}
+
+function initParticles() {
+    particles = [];
+    for (let i = 0; i < PARTICLE_COUNT; i++) {
+        particles.push(new Particle());
+    }
+}
+
+function drawConnections() {
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CONNECT_DIST) {
+                const alpha = (1 - dist / CONNECT_DIST) * 0.12;
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(212,168,83,${alpha})`;
+                ctx.lineWidth = 0.5;
+                ctx.stroke();
+            }
+        }
+    }
+}
+
+function animateCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    drawConnections();
+    requestAnimationFrame(animateCanvas);
+}
+
+resizeCanvas();
+initParticles();
+animateCanvas();
+window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+document.addEventListener('mousemove', e => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+});
+
+// ——— CURSOR GLOW ———
+const glow = document.getElementById('cursorGlow');
+document.addEventListener('mousemove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+});
+
+// ——— NAVBAR ———
+const navbar = document.getElementById('navbar');
+let lastY = 0;
+window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 60);
+    navbar.style.transform = (y > lastY && y > 200) ? 'translateY(-100%)' : 'translateY(0)';
+    lastY = y;
+});
+
+// ——— BURGER ———
+const burger = document.getElementById('burger');
+const navMenu = document.getElementById('navMenu');
+burger.addEventListener('click', () => {
+    burger.classList.toggle('active');
+    navMenu.classList.toggle('active');
+});
+navMenu.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+        burger.classList.remove('active');
+        navMenu.classList.remove('active');
     });
 });
 
-// Navbar scroll effect
-const navbar = document.querySelector('.navbar');
-let lastScroll = 0;
-
-window.addEventListener('scroll', () => {
-    const currentScroll = window.pageYOffset;
-
-    if (currentScroll > 60) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-
-    if (currentScroll > lastScroll && currentScroll > 200) {
-        navbar.style.transform = 'translateY(-100%)';
-    } else {
-        navbar.style.transform = 'translateY(0)';
-    }
-
-    lastScroll = currentScroll;
+// ——— SMOOTH SCROLL ———
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 });
 
-// Burger menu toggle
-const burgerMenu = document.querySelector('.burger-menu');
-const navMenu = document.querySelector('.nav-menu');
-
-burgerMenu?.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    burgerMenu.classList.toggle('active');
-
-    const spans = burgerMenu.querySelectorAll('span');
-    if (burgerMenu.classList.contains('active')) {
-        spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
-        spans[1].style.opacity = '0';
-        spans[2].style.transform = 'rotate(-45deg) translate(5px, -5px)';
-    } else {
-        spans.forEach(s => {
-            s.style.transform = 'none';
-            s.style.opacity = '1';
-        });
-    }
-});
-
-// Intersection Observer — scroll-triggered reveals
+// ——— SCROLL REVEAL ———
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('[data-reveal]').forEach(el => revealObserver.observe(el));
+
+// Word-by-word hero reveal
+const wordObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
+            const words = entry.target.querySelectorAll('[data-reveal-word]');
+            words.forEach((w, i) => {
+                setTimeout(() => w.classList.add('visible'), i * 120);
+            });
+            wordObserver.unobserve(entry.target);
         }
     });
-}, {
-    threshold: 0.1,
-    rootMargin: '0px 0px -60px 0px'
-});
+}, { threshold: 0.2 });
 
-// Apply reveal to key elements
-const revealSelectors = [
-    '.section-header',
-    '.section-eyebrow',
-    '.section-title',
-    '.section-description',
-    '.service-card',
-    '.benefit-card',
-    '.process-step',
-    '.contact-info',
-    '.contact-form',
-    '.why-us-left',
-    '.cta-content'
-];
+document.querySelectorAll('.hero-title').forEach(el => wordObserver.observe(el));
 
-revealSelectors.forEach(selector => {
-    document.querySelectorAll(selector).forEach((el, i) => {
-        el.classList.add('reveal');
-        if (i < 6) {
-            el.classList.add(`reveal-delay-${Math.min(i + 1, 4)}`);
-        }
-        revealObserver.observe(el);
+// ——— TILT / RADIAL GLOW ON CARDS ———
+document.querySelectorAll('[data-tilt]').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width) * 100;
+        const y = ((e.clientY - rect.top) / rect.height) * 100;
+        card.style.setProperty('--mx', x + '%');
+        card.style.setProperty('--my', y + '%');
     });
 });
 
-// Counter animation for stat numbers
-const animateCounter = (element, target, suffix) => {
-    const duration = 2000;
-    const startTime = performance.now();
-
-    const update = (currentTime) => {
-        const elapsed = currentTime - startTime;
-        const progress = Math.min(elapsed / duration, 1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const current = Math.floor(eased * target);
-
-        element.textContent = current + suffix;
-
-        if (progress < 1) {
-            requestAnimationFrame(update);
-        }
-    };
-
-    requestAnimationFrame(update);
-};
-
-const statsObserver = new IntersectionObserver((entries) => {
+// ——— COUNTER ANIMATION ———
+const countObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
             const el = entry.target;
-            const text = el.textContent;
-            const target = parseInt(text.replace(/\D/g, ''));
-            const suffix = text.includes('%') ? '%' : '+';
-
-            el.textContent = '0' + suffix;
-            setTimeout(() => animateCounter(el, target, suffix), 200);
-
-            statsObserver.unobserve(el);
+            const target = parseInt(el.dataset.count);
+            const duration = 2000;
+            const start = performance.now();
+            const tick = now => {
+                const p = Math.min((now - start) / duration, 1);
+                const ease = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.floor(ease * target);
+                if (p < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
+            countObserver.unobserve(el);
         }
     });
 }, { threshold: 0.5 });
 
-document.querySelectorAll('.stat-number').forEach(stat => {
-    statsObserver.observe(stat);
-});
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
 
-// Form handling
-const contactForm = document.querySelector('.contact-form');
+// ——— TIMELINE PROGRESS ———
+const timelineSection = document.querySelector('.timeline');
+const timelineTrack = document.getElementById('timelineTrack');
+const timelineSteps = document.querySelectorAll('.timeline-step');
 
-contactForm?.addEventListener('submit', (e) => {
+if (timelineSection && timelineTrack) {
+    const updateTimeline = () => {
+        const rect = timelineSection.getBoundingClientRect();
+        const viewH = window.innerHeight;
+        const totalH = timelineSection.offsetHeight;
+        const scrolled = Math.max(0, Math.min(1, (viewH - rect.top) / (viewH + totalH)));
+        const progress = scrolled * totalH;
+        timelineTrack.style.height = progress + 'px';
+
+        timelineSteps.forEach(step => {
+            const stepRect = step.getBoundingClientRect();
+            step.classList.toggle('active', stepRect.top < viewH * 0.6);
+        });
+    };
+    window.addEventListener('scroll', updateTimeline, { passive: true });
+    updateTimeline();
+}
+
+// ——— FORM ———
+const form = document.getElementById('contactForm');
+form?.addEventListener('submit', e => {
     e.preventDefault();
-
-    const formData = new FormData(contactForm);
-    const data = Object.fromEntries(formData);
-    console.log('Form submitted:', data);
-
-    const button = contactForm.querySelector('.btn-primary');
-    const buttonSpan = button.querySelector('span');
-    const originalText = buttonSpan.textContent;
-
-    buttonSpan.textContent = 'Отправлено!';
-    button.style.background = '#2d6a4f';
-    button.style.pointerEvents = 'none';
-
+    const btn = form.querySelector('.btn');
+    const span = btn.querySelector('span');
+    const orig = span.textContent;
+    span.textContent = 'Отправлено!';
+    btn.style.background = '#2d6a4f';
+    btn.style.pointerEvents = 'none';
     setTimeout(() => {
-        buttonSpan.textContent = originalText;
-        button.style.background = '';
-        button.style.pointerEvents = '';
-        contactForm.reset();
+        span.textContent = orig;
+        btn.style.background = '';
+        btn.style.pointerEvents = '';
+        form.reset();
     }, 3000);
 });
 
-// Service button click → scroll to contact with pre-filled service
-document.querySelectorAll('.service-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const card = button.closest('.service-card');
-        const serviceName = card.querySelector('.service-title').textContent;
-        const contactSection = document.querySelector('#contact');
-
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-
-            setTimeout(() => {
-                const serviceSelect = contactForm?.querySelector('#service');
-                const messageArea = contactForm?.querySelector('#message');
-
-                if (serviceSelect) {
-                    const options = Array.from(serviceSelect.options);
-                    const match = options.find(opt =>
-                        serviceName.toLowerCase().includes(opt.text.toLowerCase().split(' ')[0])
-                    );
-                    if (match) serviceSelect.value = match.value;
-                }
-
-                if (messageArea) {
-                    messageArea.value = `Здравствуйте! Меня интересует услуга: ${serviceName}. `;
-                    messageArea.focus();
-                }
-            }, 800);
-        }
-    });
-});
-
-// CTA buttons → scroll to contact
-document.querySelectorAll('.btn-primary').forEach(button => {
-    if (button.closest('.contact-form')) return;
-    if (button.getAttribute('href') === '#contact' || button.closest('a[href="#contact"]')) return;
-
-    button.addEventListener('click', () => {
-        const contactSection = document.querySelector('#contact');
-        if (contactSection) {
-            contactSection.scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                contactForm?.querySelector('input')?.focus();
-            }, 800);
-        }
+// ——— SERVICE LINK → CONTACT ———
+document.querySelectorAll('.srv-link').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const svc = btn.dataset.service;
+        const card = btn.closest('.srv-card');
+        const name = card.querySelector('h3').textContent;
+        document.querySelector('#contact')?.scrollIntoView({ behavior: 'smooth' });
+        setTimeout(() => {
+            const sel = form?.querySelector('#service');
+            const msg = form?.querySelector('#message');
+            if (sel) sel.value = svc || '';
+            if (msg) { msg.value = `Здравствуйте! Интересует: ${name}. `; msg.focus(); }
+        }, 800);
     });
 });

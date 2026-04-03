@@ -225,6 +225,17 @@ if (timelineSection && timelineTrack) {
     updateTimeline();
 }
 
+// ——— ABSTRACT SVG ANIMATIONS — trigger on scroll ———
+const absObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('abs-active');
+    });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.hero, .services, .why-us, .cta-band, .contact').forEach(sec => {
+    absObserver.observe(sec);
+});
+
 // ——— FORM ———
 const form = document.getElementById('contactForm');
 form?.addEventListener('submit', e => {

@@ -356,6 +356,100 @@ body:hover .cursor-glow{opacity:1}
 .footer-col a:hover{color:var(--copper)}
 .footer-bar{padding-top:32px;border-top:1px solid var(--border);text-align:center;font-size:13px;color:var(--txt3)}
 
+/* =========== ABSTRACT SVG DECORATIONS =========== */
+
+.abs{position:absolute;pointer-events:none;z-index:1;overflow:visible}
+
+/* Hero — vertical line + dots on right */
+.abs--hero{
+  right:5%;top:10%;width:40px;height:80%;
+  opacity:0;transition:opacity 1s var(--ease);
+}
+.hero.abs-active .abs--hero{opacity:1}
+
+.abs-line{
+  stroke-dasharray:600;stroke-dashoffset:600;
+  transition:stroke-dashoffset 2s var(--ease2);
+}
+.abs-active .abs-line{stroke-dashoffset:0}
+
+.abs-line--h{
+  stroke-dasharray:1200;stroke-dashoffset:1200;
+  transition:stroke-dashoffset 1.8s var(--ease2);
+}
+.abs-active .abs-line--h{stroke-dashoffset:0}
+
+.abs-dot{
+  opacity:0;transform-origin:center;
+  transition:opacity .5s var(--ease),transform .5s var(--ease);
+  transform:scale(0);
+}
+.abs-active .abs-dot{opacity:1;transform:scale(1)}
+.abs-active .abs-dot:nth-child(2){transition-delay:.3s}
+.abs-active .abs-dot:nth-child(3){transition-delay:.5s}
+.abs-active .abs-dot:nth-child(4){transition-delay:.7s}
+.abs-active .abs-dot:nth-child(5){transition-delay:.9s}
+.abs-active .abs-dot:nth-child(6){transition-delay:1.1s}
+
+.abs-diamond{
+  stroke-dasharray:100;stroke-dashoffset:100;
+  transition:stroke-dashoffset 1s var(--ease2);
+}
+.abs-active .abs-diamond{stroke-dashoffset:0}
+.abs-active .abs-diamond:nth-of-type(2){transition-delay:.6s}
+
+/* Services — horizontal line across top */
+.abs--srv{
+  top:60px;left:0;right:0;width:100%;height:40px;
+  opacity:0;transition:opacity .8s var(--ease);
+}
+.services.abs-active .abs--srv{opacity:1}
+
+/* Why Us — large ring */
+.abs--why{
+  right:-40px;top:50%;transform:translateY(-50%);width:200px;height:200px;
+  opacity:0;transition:opacity 1s var(--ease);
+}
+.why-us.abs-active .abs--why{opacity:.4}
+
+.abs-ring{
+  stroke-dasharray:503;stroke-dashoffset:503;
+  transition:stroke-dashoffset 2.5s var(--ease2);
+}
+.abs-active .abs-ring{stroke-dashoffset:0}
+
+/* CTA — corner brackets */
+.abs--cta{width:60px;height:60px;opacity:0;transition:opacity .6s var(--ease)}
+.abs--cta-tl{top:24px;left:24px}
+.abs--cta-br{bottom:24px;right:24px}
+.cta-band.abs-active .abs--cta{opacity:1}
+
+.abs-bracket{
+  stroke-dasharray:200;stroke-dashoffset:200;
+  transition:stroke-dashoffset 1.2s var(--ease2);
+}
+.abs-active .abs-bracket{stroke-dashoffset:0}
+.abs-dot--dark{opacity:0;transition:opacity .5s .8s var(--ease)}
+.abs-active .abs-dot--dark{opacity:1}
+
+/* Contact — diagonal cross */
+.abs--contact{
+  right:0;top:50%;transform:translateY(-50%);width:160px;height:160px;
+  opacity:0;transition:opacity 1s var(--ease);
+}
+.contact.abs-active .abs--contact{opacity:.5}
+
+/* Responsive — reposition/hide on mobile */
+@media(max-width:768px){
+  .abs--hero{right:2%;width:24px;opacity:0}
+  .hero.abs-active .abs--hero{opacity:.6}
+  .abs--srv{top:40px}
+  .abs--why{right:-60px;width:140px;height:140px}
+  .abs--cta-tl{top:12px;left:12px;width:40px;height:40px}
+  .abs--cta-br{bottom:12px;right:12px;width:40px;height:40px}
+  .abs--contact{width:100px;height:100px;right:-20px}
+}
+
 /* =============== ANIMATIONS =============== */
 
 /* Base reveal — slide up + fade */

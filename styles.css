@@ -381,23 +381,109 @@ body:hover .cursor-glow{opacity:1}
     gap:28px;z-index:99;
   }
   .nav-menu.active a{font-size:18px;letter-spacing:.12em}
+
   .hero{padding:100px 0 60px}
-  .hero-metrics{flex-direction:column;gap:24px}
-  .srv-grid{grid-template-columns:1fr}
-  .why-right{grid-template-columns:1fr}
-  .form-2col{grid-template-columns:1fr}
-  .form{padding:28px 20px}
-  .services,.why-us,.process,.contact{padding:80px 0}
+  .hero-metrics{
+    flex-direction:row;gap:0;
+    border:1px solid var(--border);border-radius:12px;
+    overflow:hidden;
+  }
+  .metric{
+    flex:1;padding:20px 16px;text-align:center;
+    border-right:1px solid var(--border);
+  }
+  .metric:last-child{border-right:none}
+  .metric-val,.metric-suffix{font-size:28px}
+  .metric-label{font-size:11px}
+
+  /* Services — cards with borders on mobile */
+  .srv-grid{
+    grid-template-columns:1fr;
+    gap:16px;background:transparent;
+  }
+  .srv-card{
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:28px 24px;
+    background:var(--card);
+  }
+  .srv-card:hover{background:var(--card-hover)}
+  .srv-idx{font-size:36px;margin-bottom:8px}
+  .srv-card h3{font-size:18px}
+  .srv-link{
+    display:inline-flex;align-items:center;gap:6px;
+    padding:10px 20px;border:1px solid var(--copper);
+    border-radius:6px;margin-top:4px;
+  }
+  .srv-link::after{display:none}
+
+  /* Why us — cards with borders */
+  .why-right{
+    grid-template-columns:1fr;gap:12px;background:transparent;
+  }
+  .benefit{
+    border:1px solid var(--border);border-radius:12px;
+    padding:24px 20px;background:var(--card);
+    display:flex;gap:16px;align-items:flex-start;
+  }
+  .benefit::before{display:none}
+  .benefit-num{
+    margin-bottom:0;font-size:16px;opacity:.6;
+    min-width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--border-h);border-radius:6px;
+    flex-shrink:0;
+  }
+  .benefit h4{font-size:16px;margin-bottom:4px}
+  .benefit p{font-size:13px}
+
+  /* Process timeline — better mobile */
+  .timeline{padding-left:32px}
+  .step-dot{
+    left:-32px;width:12px;height:12px;
+    border:2px solid var(--border-h);border-radius:50%;
+    background:var(--surface);
+  }
+  .timeline-step.active .step-dot{
+    border-color:var(--copper);background:var(--copper);
+  }
+  .step-body{
+    background:var(--card);border:1px solid var(--border);
+    border-radius:12px;padding:20px;
+  }
+  .step-body h3{font-size:18px}
+
+  /* Buttons bigger on mobile */
+  .btn{padding:16px 28px;font-size:14px;border-radius:8px}
+  .btn--fill{border-radius:8px}
+  .btn--line{border-radius:0}
+
+  /* CTA band */
   .cta-band{padding:64px 0}
+  .cta-inner h2{font-size:28px}
+  .cta-inner .btn{border-radius:8px}
+
+  /* Form */
+  .form-2col{grid-template-columns:1fr}
+  .form{padding:28px 20px;border-radius:12px}
+
+  /* Footer */
   .footer-grid{grid-template-columns:1fr;gap:24px}
+
+  .services,.why-us,.process,.contact{padding:80px 0}
   .scroll-cue{display:none}
   .cursor-glow{display:none}
-  .metric-val,.metric-suffix{font-size:36px}
+
+  /* Section headers */
+  .sec-head{margin-bottom:40px}
+  .sec-title{font-size:28px}
 }
 @media(max-width:480px){
   .container{padding:0 16px}
-  .srv-card{padding:28px 20px}
-  .srv-idx{font-size:40px}
+  .hero-title{font-size:36px}
+  .hero-metrics .metric{padding:16px 12px}
+  .metric-val,.metric-suffix{font-size:24px}
+  .srv-card{padding:24px 20px}
 }
 
 /* Reduced motion */
